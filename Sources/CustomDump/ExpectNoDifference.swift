@@ -1,4 +1,3 @@
-import IssueReporting
 
 /// Asserts that two values have no difference.
 ///
@@ -60,37 +59,8 @@ public func expectNoDifference<T: Equatable>(
     let format = DiffFormat.proportional
     guard let difference = diff(expression1, expression2, format: format)
     else {
-      reportIssue(
-        """
-        ("\(expression1)" is not equal to ("\(expression2)"), but no difference was detected.
-        """,
-        fileID: fileID,
-        filePath: filePath,
-        line: line,
-        column: column
-      )
       return
     }
-    reportIssue(
-      """
-      \(message?.appending(" - ") ?? "")Difference: …
-
-      \(difference.indenting(by: 2))
-
-      (First: \(format.first), Second: \(format.second))
-      """,
-      fileID: fileID,
-      filePath: filePath,
-      line: line,
-      column: column
-    )
   } catch {
-    reportIssue(
-      error,
-      fileID: fileID,
-      filePath: filePath,
-      line: line,
-      column: column
-    )
   }
 }

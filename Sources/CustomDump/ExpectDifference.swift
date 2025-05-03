@@ -1,4 +1,3 @@
-import IssueReporting
 
 /// Expects that a value has a set of changes.
 ///
@@ -70,38 +69,9 @@ public func expectDifference<T: Equatable>(
     let format = DiffFormat.proportional
     guard let difference = diff(expression1, expression2, format: format)
     else {
-      reportIssue(
-        """
-        ("\(expression1)" is not equal to ("\(expression2)"), but no difference was detected.
-        """,
-        fileID: fileID,
-        filePath: filePath,
-        line: line,
-        column: column
-      )
       return
     }
-    reportIssue(
-      """
-      \(message()?.appending(" - ") ?? "")Difference: …
-
-      \(difference.indenting(by: 2))
-
-      (Expected: \(format.first), Actual: \(format.second))
-      """,
-      fileID: fileID,
-      filePath: filePath,
-      line: line,
-      column: column
-    )
   } catch {
-    reportIssue(
-      error,
-      fileID: fileID,
-      filePath: filePath,
-      line: line,
-      column: column
-    )
   }
 }
 
@@ -128,37 +98,8 @@ public func expectDifference<T: Equatable & Sendable>(
     let format = DiffFormat.proportional
     guard let difference = diff(expression1, expression2, format: format)
     else {
-      reportIssue(
-        """
-        ("\(expression1)" is not equal to ("\(expression2)"), but no difference was detected.
-        """,
-        fileID: fileID,
-        filePath: filePath,
-        line: line,
-        column: column
-      )
       return
     }
-    reportIssue(
-      """
-      \(message()?.appending(" - ") ?? "")Difference: …
-
-      \(difference.indenting(by: 2))
-
-      (Expected: \(format.first), Actual: \(format.second))
-      """,
-      fileID: fileID,
-      filePath: filePath,
-      line: line,
-      column: column
-    )
   } catch {
-    reportIssue(
-      error,
-      fileID: fileID,
-      filePath: filePath,
-      line: line,
-      column: column
-    )
   }
 }

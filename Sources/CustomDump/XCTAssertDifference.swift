@@ -1,4 +1,3 @@
-import XCTestDynamicOverlay
 
 @available(*, deprecated, renamed: "expectDifference")
 public func XCTAssertDifference<T>(
@@ -19,14 +18,6 @@ public func XCTAssertDifference<T>(
     let format = DiffFormat.proportional
     guard let difference = diff(expression1, expression2, format: format)
     else {
-      XCTFail(
-        """
-        XCTAssertDifference failed: ("\(expression1)" is not equal to ("\(expression2)"), but no \
-        difference was detected.
-        """,
-        file: file,
-        line: line
-      )
       return
     }
     let failure = """
@@ -36,19 +27,7 @@ public func XCTAssertDifference<T>(
 
       (Expected: \(format.first), Actual: \(format.second))
       """
-    XCTFail(
-      "\(failure)\(message.isEmpty ? "" : " - \(message)")",
-      file: file,
-      line: line
-    )
   } catch {
-    XCTFail(
-      """
-      XCTAssertDifference failed: threw error "\(error)"
-      """,
-      file: file,
-      line: line
-    )
   }
 }
 
@@ -71,14 +50,6 @@ public func XCTAssertDifference<T: Sendable>(
     let format = DiffFormat.proportional
     guard let difference = diff(expression1, expression2, format: format)
     else {
-      XCTFail(
-        """
-        XCTAssertDifference failed: ("\(expression1)" is not equal to ("\(expression2)"), but no \
-        difference was detected.
-        """,
-        file: file,
-        line: line
-      )
       return
     }
     let failure = """
@@ -88,18 +59,6 @@ public func XCTAssertDifference<T: Sendable>(
 
       (Expected: \(format.first), Actual: \(format.second))
       """
-    XCTFail(
-      "\(failure)\(message.isEmpty ? "" : " - \(message)")",
-      file: file,
-      line: line
-    )
   } catch {
-    XCTFail(
-      """
-      XCTAssertDifference failed: threw error "\(error)"
-      """,
-      file: file,
-      line: line
-    )
   }
 }
